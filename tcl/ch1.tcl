@@ -33,13 +33,23 @@ proc p03 {str} {
 }
 p03 "Now I need a drink, alcoholic of course, after the heavy lectures involving quantum mechanics."
 
-
-proc getindex {str idx} {
-    return [lindex $str $idx]
-}
 proc p04 {str} {
     puts $str
-    puts [getindex [getindex $str 0] 1]
+    set tmp [regsub -all {[\.,]} $str {}]
+    set cnt 0
+    foreach word $tmp {
+        incr cnt
+        if {[lsearch {1 5 6 7 8 9 15 16 19} $cnt] != -1} {
+            # 1word
+            set ary($cnt) [string range $word 0 0]
+        } else {
+            # 2word
+            set ary($cnt) [string range $word 0 1]
+        }
+    }
+    for {set i 1} {$i <= [array size ary]} {incr i} {
+        puts $ary($i)
+    }
 }
 p04 "Hi He Lied Because Boron Could Not Oxidize Fluorine. New Nations Might Also Sign Peace Security Clause. Arthur King Can."
 
